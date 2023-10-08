@@ -1,10 +1,3 @@
-"""
-KNU Lab 1
-Nonlinear equations methods
-OM-3 Dmytro Skorobahatko
-"""
-
-
 def newton(f, Df, x0, epsilon, N):
     """
     Newton's method.
@@ -117,57 +110,3 @@ if __name__ == '__main__':
     run('Newton')
     run('Bisection')
     run('Relaxation')
-
-""" 
-
-____PAPPER____
-
-
-case 'Newton':
-            print("Ex_new_exp")
-            f = lambda x: 1 - np.exp(-2 * x)  # p(x) = 1 - e ^ -2x
-            Df = lambda x: 2 * np.exp(-2 * x)
-            newton(f, Df, 0.1, 1e-13, 20)
-            
-            f = lambda x: x ** (1 / 3)
-            Df = lambda x: (1 / 3) * x ** (-2 / 3)
-            approx = newton(f, Df, 0.1, 1e-2, 100)
-            
-            f = lambda x: x ** 2 - x - 1
-            Df = lambda x: 2 * x - 1
-            newton(f, Df, 1, 1e-8, 10)
-            1.618033988749989
-            
-case 'Bisection':
-            print(" Ex_Bi_exp")
-            f = lambda x: 1 - np.exp(-2 * x)  # f(x) = 1 - e ^ -2x
-            bisection(f, 0, 2, 45)
-
-            f = lambda x: x ** 2 - x - 1
-            bisection(f, 1, 2, 25)
-            1.618033990263939
-            
-            f = lambda x: (2 * x - 1) * (x - 3)
-            bisection(f, 0, 1, 10)
-            0.5
-
-case 'Relaxation':
-            print(" Ex_Rel_exp")
-            f = lambda x: 1 - np.exp(-2 * x)  # x = 1 - e ^ -2x
-            relaxation(f, 1, 1e-8, 100)
-            
-            
-        Implement Newton's method: compute the linear approximation
-        of f(x) at xn and find x intercept by the formula
-            x = xn - f(xn)/Df(xn)
-        Continue until abs(f(xn)) < epsilon and return xn.
-        If Df(xn) == 0, return None. If the number of iterations
-        exceeds max_iter, then return None.
-
-        The midpoint of the Nth interval computed by the bisection method. The
-        initial interval [a_0,b_0] is given by [a,b]. If f(m_n) == 0 for some
-        midpoint m_n = (a_n + b_n)/2, then the function returns this solution.
-        If all signs of values f(a_n), f(b_n) and f(m_n) are the same at any
-        iteration, the bisection method fails and return None.
-
-"""
