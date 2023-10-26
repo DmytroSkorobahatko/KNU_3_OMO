@@ -64,11 +64,9 @@ def solve_linear_system(A, b, method="gaussian", max_iter=100, epsilon=1e-6):
 
 
 def generate_random_matrix(n, min_value=0, max_value=1):
-    return np.random.uniform(min_value, max_value, (n, n))
-
-
-def generate_random_vector(n, min_value=0, max_value=1):
-    return np.random.uniform(min_value, max_value, n)
+    max_value = n
+    rand_matrix = np.random.uniform(min_value, max_value, (n, n))
+    return rand_matrix
 
 
 def generate_hilbert_matrix(n):
@@ -79,26 +77,42 @@ def generate_hilbert_matrix(n):
     return H
 
 
+def generate_vector(n, min_value=0, max_value=1):
+    rand_vector = np.random.uniform(min_value, max_value, n)
+    return rand_vector
+
+
+def generate_answer_vector(n, A):
+    ones = np.ones(n)
+    vec = np.dot(A, ones)
+    return vec
+
+
+def use_all_methods(matrix, b):
+    gaussian = solve_linear_system(matrix, b, method='gaussian')
+    tridiagonal = solve_linear_system(matrix, b, method='tridiagonal')
+    jacobi = solve_linear_system(matrix, b, method='jacobi')
+    seidel = solve_linear_system(matrix, b, method='seidel')
+
+    return [gaussian, tridiagonal, jacobi, seidel]
+
+
 def start():
-    n = 10
+    n = 3
     A = generate_random_matrix(n)
-    b = generate_random_vector(n)
     H = generate_hilbert_matrix(n)
-    print(A, '\n', H, '\nb=', b)
+    b = generate_vector(n)  # n, min_value=0, max_value=1
+    print('A =', A, '\nH =', H)
 
-    # choice = input("WTF do U want?\n(1 - gaussian, 2 - tridiagonal, 3 - jacobi, 4 - gauss_seidel)\n")
+    print('\nfor rand matrix')
+    [print(i) for i in use_all_methods(A, b)]
+    Ab = generate_answer_vector(n, A)
+    [print(i) for i in use_all_methods(A, Ab)]
 
-    print(solve_linear_system(A, b, method='gaussian'))
-    print(solve_linear_system(A, b, method='tridiagonal'))
-    print(solve_linear_system(A, b, method='jacobi'))
-    print(solve_linear_system(A, b, method='gauss_seidel'))
-
-    print('\nfor Hil\n')
-
-    print(solve_linear_system(H, b, method='gaussian'))
-    print(solve_linear_system(H, b, method='tridiagonal'))
-    print(solve_linear_system(H, b, method='jacobi'))
-    print(solve_linear_system(H, b, method='gauss_seidel'))
+    print('\nfor Hil`s matrix')
+    [print(i) for i in use_all_methods(H, b)]
+    Hb = generate_answer_vector(n, H)
+    [print(i) for i in use_all_methods(H, Hb)]
 
 
 if __name__ == '__main__':
